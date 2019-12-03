@@ -24,7 +24,7 @@ export class ProgramService {
   upsertOne(program: IProgram): void {
     const tmp: IProgram = this.getOne(program.name);
     if (tmp) {
-      tmp.xmlData = program.xmlData;
+      tmp.Data = program.Data;
     } else {
       this.programList.push(program);
     }

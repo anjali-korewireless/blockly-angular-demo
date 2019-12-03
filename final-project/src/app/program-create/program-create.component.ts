@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramService } from '../services/program.service';
 import { IProgram } from '../models/program';
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var Blockly: any;
 
@@ -15,6 +16,10 @@ export class ProgramCreateComponent implements OnInit {
   programName: string;
   program: IProgram;
   workspace: any;
+//   xml = '<category name="Control" colour="120">'+
+//   '<block type="controls_if"></block>'+
+//   '<block type="controls_repeat_ext"></block>'+
+// '</category>'
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +33,7 @@ export class ProgramCreateComponent implements OnInit {
       if (!this.program) {
         this.program = {
           name: this.programName,
-          xmlData: null
+          Data: null
         };
       }
       console.log(
@@ -41,20 +46,24 @@ export class ProgramCreateComponent implements OnInit {
   ngOnInit() {
     this.workspace = Blockly.inject('blocklyDiv', {
       toolbox: document.getElementById('toolbox'),
-      scrollbars: false
+      scrollbars: true,
+      trashcan: true
     });
 
-    if (this.program.xmlData) {
+    if (this.program.Data) {
       this.workspace.clear();
       Blockly.Xml.domToWorkspace(
-        Blockly.Xml.textToDom(this.program.xmlData),
+        Blockly.Xml.textToDom(this.program.Data),
         this.workspace
       );
     }
   }
 
   saveProgram(): void {
-    this.program.xmlData = Blockly.Xml.domToText(
+    
+    //Blockly.JavaScript.addReservedWords('code');
+    //this.program.Data = Blockly.JavaScript.workspaceToCode(this.workspace);
+    this.program.Data = Blockly.Xml.domToText(
       Blockly.Xml.workspaceToDom(this.workspace)
     );
     console.log('saving the program - ', JSON.stringify(this.program));

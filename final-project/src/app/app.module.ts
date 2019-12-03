@@ -21,13 +21,15 @@ import { AppComponent } from './app.component';
 import { ProgramListComponent } from './program-list/program-list.component';
 import { ProgramCreateComponent } from './program-create/program-create.component';
 import { ProgramNameDialogComponent } from './program-name-dialog/program-name-dialog.component';
+import { DemoComponent } from './demo/demo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProgramListComponent,
     ProgramCreateComponent,
-    ProgramNameDialogComponent
+    ProgramNameDialogComponent,
+    DemoComponent
   ],
   imports: [
     BrowserModule,
