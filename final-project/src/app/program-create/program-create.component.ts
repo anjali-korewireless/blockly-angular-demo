@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramService } from '../services/program.service';
 import { IProgram } from '../models/program';
 import { DomSanitizer } from '@angular/platform-browser';
+import { saveAs } from 'file-saver';
 
 declare var Blockly: any;
-
 @Component({
   selector: 'app-program-create',
   templateUrl: './program-create.component.html',
@@ -67,6 +67,8 @@ export class ProgramCreateComponent implements OnInit {
       Blockly.Xml.workspaceToDom(this.workspace)
     );
     console.log('saving the program - ', JSON.stringify(this.program));
+    let a = new Blob([this.program.Data], {type: 'application/xml'})
+    saveAs(a, "text.xml")
     this.programService.upsertOne(this.program);
     this.router.navigate(['listProgram']);
   }
